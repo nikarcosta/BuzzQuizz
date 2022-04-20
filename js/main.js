@@ -19,6 +19,7 @@ function carregarQuizzesServidor(response){
     console.log(response.data);
     listaQuizzes = response.data;
     renderizarQuizzes()
+    renderizarQuizzesSecondScreen()
 }
 
 
@@ -35,5 +36,14 @@ function renderizarQuizzes(){
 
     for(let i = 0; i < listaQuizzes.length; i++){
         quizz.innerHTML += `<div class="capa-Quizz"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
+    }
+}
+
+function renderizarQuizzesSecondScreen(){
+
+    const quizzSecondScreen = document.querySelector(".quizzes-servidor-2").querySelector(".quizz-container");
+
+    for(let i = 0; i < listaQuizzes.length; i++){
+        quizzSecondScreen.innerHTML += `<div class="capa-Quizz"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
     }
 }
