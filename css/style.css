@@ -194,6 +194,7 @@ main {
 }
 
 .card-forms {
+    width: 600px;
     margin-top: 27px;
     padding: 21px 20px 24px 16px;
     background-color: white;
@@ -220,7 +221,9 @@ main {
     outline: none;
 }
 
-.card-forms label {
+
+
+.card-forms label, .numero-pergunta {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
@@ -232,10 +235,19 @@ main {
     color: #000000;
 }
 
+.minimizado .numero-pergunta {
+    margin-bottom: 0;
+}
+
+.aberto .numero-pergunta {
+    margin-bottom: 12px;
+}
+
 .criar-perguntas-btn {
     width: 370px;
     height: 54px;
     margin-top: 80px;
+    margin-bottom: 80px;
 
     background: #EC362D;
     border-radius: 15px;
@@ -261,6 +273,25 @@ main {
 
 .main-screen3-2 .card-forms > input[type="url"] {
     margin-bottom: 30px;
+}
+
+.aberto ion-icon {
+    display: none;
+}
+
+.card-forms.minimizado > input[type="text"],  .card-forms.minimizado > input[type="url"], .card-forms.minimizado > label {
+    display: none;
+}
+
+.titulo-card {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.minimizado ion-icon {
+    font-size: 26px;
 }
 /*MOBILE RESPONSIVO*/
 
