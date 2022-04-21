@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="main-screen1">
-        <header><span>BuzzQuizz</span></header>
+    <header><span>BuzzQuizz</span></header>
+    <div class="main-screen1 escondido">
         <main>
             <div class="quizzes-usuario-vazio">
                 <div><span>Você não criou nenhum<br>quizz ainda :(</span></div>
-                <button class="criar-quizz-btn"><span>Criar Quizz</span></button>
+                <button class="criar-quizz-btn" onclick="criarQuizz()"><span>Criar Quizz</span></button>
             </div>
             <div class="quizzes-servidor">
                 <div><span>Todos os quizzes</span></div>
@@ -23,7 +23,6 @@
         </main> 
     </div>
     <div class="main-screen2 escondido">
-        <header><span>BuzzQuizz</span></header>
         <main>
             <div class="quizzes-usuario">
                 <div class="titulo-secao">
@@ -40,6 +39,53 @@
                 <div class="quizz-container"></div>
             </div>
         </main>
+    </div>
+    <div class="main-screen3">
+        <div class="main-screen3-1">
+            <span class="screen3-title">Comece pelo começo</span>
+            <form onsubmit="return false">
+                <div class="card-forms">
+                        <input type="text" name="quizz-title" placeholder="Título do seu quizz">
+                        <input type="url" name="quizz-url" placeholder="URL da imagem do seu quizz">
+                        <input type="text" name="number-questions" placeholder="Quantidade de perguntas do quizz">
+                        <input type="text" name="quizz-levels" placeholder="Quantidade de níveis do quizz">
+
+                </div>
+                <button class="criar-perguntas-btn" onclick="criarQuizzPt1()"><span>Prosseguir pra criar perguntas</span></button>
+            </form>
+        </div>
+        <div class="main-screen3-2  escondido">
+            <span class="screen3-title">Crie suas perguntas</span>
+
+            <form onsubmit="return false">
+                <div class="card-forms">
+                    <label for="pergunta">Pergunta 1</label>
+                    <input type="text" name="pergunta" placeholder="Texto da pergunta">
+                    <input type="url" name="quizz-url" placeholder="Cor de fundo da pergunta">
+
+                    <label for="resposta-correta">Resposta correta</label>
+                    <input type="text" name="resposta-correta" placeholder="Resposta correta">
+                    <input type="url" name="quizz-url" placeholder="URL da imagem">
+
+                    <label for="">Respostas incorretas</label>
+                    <input type="text" name="resposta-errada-1" placeholder="Resposta incorreta 1">
+                    <input type="url" name="quizz-url" placeholder="URL da imagem">
+                    
+                    <input type="text" name="resposta-errada-2" placeholder="Resposta incorreta 2">
+                    <input type="url" name="quizz-url" placeholder="URL da imagem">
+
+                    <input type="text" name="resposta-errada-3" placeholder="Resposta incorreta 3">
+                    <input type="url" name="quizz-url" placeholder="URL da imagem">
+                </div>
+                <button class="criar-perguntas-btn" onclick="criarQuizzPt2()"><span>Prosseguir pra criar níveis</span></button>
+            </form>
+        </div>
+        <div class="main-screen3-3 escondido">
+            <span>Agora, decida os níveis</span>
+        </div>
+        <div class="main-screen-end escondido">
+            <span>Seu quizz está pronto!</span>
+        </div>
     </div>
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>

@@ -1,5 +1,5 @@
-const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes"
-const API_DE_TESTE = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes" //SÓ PARA TESTE DE LAYOUT E FUNÇÕES, DEPOIS SERÁ REMOVIDA
+//const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes"
+//const API_DE_TESTE = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes" //SÓ PARA TESTE DE LAYOUT E FUNÇÕES, DEPOIS SERÁ REMOVIDA
 
 let listaQuizzes = [];
 
@@ -46,4 +46,24 @@ function renderizarQuizzesSecondScreen(){
     for(let i = 0; i < listaQuizzes.length; i++){
         quizzSecondScreen.innerHTML += `<div class="capa-Quizz"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
     }
+}
+
+function criarQuizzPt1(){
+    let campos = document.querySelector(".main-screen3-1").querySelectorAll("input");
+    for(let i = 0; i < campos.length; i++){
+        if(campos[i].value == ""){
+            alert("Preencha todos os campos!");
+        }
+    }
+
+    if(campos[0].value.length < 20 || campos[0].value.length > 65 || campos[2].value < 3 || campos[3].value < 2){
+        alert("Preencha o formulário corretamente!");
+    }else{
+        document.querySelector(".main-screen3-1").classList.add("escondido");
+        document.querySelector(".main-screen3-2").classList.remove("escondido");
+    }
+}
+
+function criarQuizzPt2() {
+    console.log("Criar Quizz Pt2");
 }
