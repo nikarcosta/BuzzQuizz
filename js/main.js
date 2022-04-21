@@ -1,11 +1,19 @@
 //const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes"
-//const API_DE_TESTE = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes" //SÓ PARA TESTE DE LAYOUT E FUNÇÕES, DEPOIS SERÁ REMOVIDA
+const API_DE_TESTE = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes" //SÓ PARA TESTE DE LAYOUT E FUNÇÕES, DEPOIS SERÁ REMOVIDA
+
+const shuffle = () => 0.5 - Math.random();
 
 let listaQuizzes = [];
 let paginaInicialCriacao = [];
+let idQuizzExibicao;
+
+let quizzSelecionado = [];
+
 
 buscarQuizzesServidor()
 
+
+//BUSCA NO SERVIDOR TODOS OS QUIZZES
 function buscarQuizzesServidor(){
 
     const promessa = axios.get(`${API_DE_TESTE}`);
@@ -15,12 +23,12 @@ function buscarQuizzesServidor(){
 
 }
 
+//COPIA TODOS OS QUIZZES PARA UM ARRAY
 function carregarQuizzesServidor(response){
 
     console.log(response.data);
     listaQuizzes = response.data;
     renderizarQuizzes()
-    renderizarQuizzesSecondScreen()
 }
 
 
@@ -31,21 +39,69 @@ function erroAoCarregarQuizzServidor(erro){
 
 }
 
+//EXIBE LISTA DE QUIZZES
 function renderizarQuizzes(){
 
     const quizz = document.querySelector(".quizz-container");
 
     for(let i = 0; i < listaQuizzes.length; i++){
-        quizz.innerHTML += `<div class="capa-Quizz"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
+        quizz.innerHTML += `<div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
     }
 }
 
-function renderizarQuizzesSecondScreen(){
+//BUSCA NO SERVIDOR O QUIZZ SELECIONADO PELO USUÁRIO
+function buscaQuizz(identificador){
 
-    const quizzSecondScreen = document.querySelector(".quizzes-servidor-2").querySelector(".quizz-container");
+    const promessa = axios.get(`${API_DE_TESTE}/${identificador}`);
+    console.log(promessa);
+    promessa.then(carregarQuizzSelecionado);
+    promessa.catch(erroAoBuscarQuizzSelecionado);
 
-    for(let i = 0; i < listaQuizzes.length; i++){
-        quizzSecondScreen.innerHTML += `<div class="capa-Quizz"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
+}
+
+//COPIA O QUIZZ SELECIONADO PARA UM ARRAY
+function carregarQuizzSelecionado(response){
+
+    console.log(response.data);
+    quizzSelecionado = response.data;
+    exibeQuizzSelecionado();
+    
+}
+
+function erroAoBuscarQuizzSelecionado(erro){
+    const statusCode = erro.status;
+    console.log("Erro ao carregar quizz selecionado: " + statusCode);
+}
+
+
+//EXIBE QUIZZ SELECIONADO
+function exibeQuizzSelecionado(){
+
+    document.querySelector(".main-screen1").classList.add("escondido");
+    document.querySelector(".pagina-quizz").classList.remove("escondido");
+
+    
+    const perguntasQuizz = document.querySelector(".container-perguntas");
+
+    perguntasQuizz.innerHTML = `<div class="banner"><div class="imagem-banner"><img src="${quizzSelecionado.image}"></div><div class="tituloQuizz-selecionado">${quizzSelecionado.title}</div></div>
+        <div class="todasAsPerguntas"></div>
+    `
+
+    const inserePerguntas = document.querySelector(".todasAsPerguntas");
+
+    let quizzSelecionadoEmbaralhado =  embaralharAlternativas(quizzSelecionado);
+
+
+    for(let i = 0; i < quizzSelecionadoEmbaralhado.length; i++){
+        inserePerguntas.innerHTML += `<div class="arcabouco"><div class="perguntas"><span>${quizzSelecionadoEmbaralhado[i].title}</span></div><div id="${i}" class="alternativas"></div></div>
+        `
+
+        for(let j = 0; j < quizzSelecionadoEmbaralhado[i].answers.length; j++) {
+            const insereAlternativas = document.getElementById(`${i}`);
+
+            insereAlternativas.innerHTML += `<div><div class="imgAlternativa"><img src="${quizzSelecionadoEmbaralhado[i].answers[j].image}"></div><div class="txtAlternativa">${quizzSelecionadoEmbaralhado[i].answers[j].text}</div></div>` 
+
+        }
     }
 }
 
@@ -250,3 +306,15 @@ function criarQuizzPt3(elemento) {
     
     console.log("Quizz Pt3 sucesso!");
 }
+
+
+//EMBARALHA AS ALTERNATIVAS
+function embaralharAlternativas(objeto){
+
+    const alternativasAleatorias = objeto.questions.map(q => ({...q, answers: q.answers.sort(shuffle)}))
+
+    console.log(alternativasAleatorias);
+
+    return alternativasAleatorias;
+}
+
