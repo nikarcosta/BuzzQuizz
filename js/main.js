@@ -76,7 +76,7 @@ function criarQuizzTela2(paginaAnterior){
     const numPerguntas = paginaAnterior[2];
     const inserirPergunta = document.querySelector(".main-screen3-2").querySelector("form");
     inserirPergunta.innerHTML = `
-            <div class="card-forms aberto" onclick="estaMinimizado(this)">
+            <div class="card-forms aberto" onclick="estaMinimizado1(this)">
                 <div class="titulo-card">
                     <div class="numero-pergunta">Pergunta 1</div>
                     <ion-icon name="create-outline"></ion-icon>
@@ -103,7 +103,7 @@ function criarQuizzTela2(paginaAnterior){
 
     for (let i = 1; i < numPerguntas; i++){
         inserirPergunta.innerHTML += `
-                <div class="card-forms minimizado" onclick="estaMinimizado(this)">
+                <div class="card-forms minimizado" onclick="estaMinimizado1(this)">
                     <div class="titulo-card">
                         <div class="numero-pergunta">Pergunta ${i+1}</div>
                         <ion-icon name="create-outline"></ion-icon>
@@ -131,9 +131,23 @@ function criarQuizzTela2(paginaAnterior){
     inserirPergunta.innerHTML += `<button class="criar-perguntas-btn" onclick="criarQuizzPt2(this)"><span>Prosseguir pra criar níveis</span></button>`;
 }
 
-function estaMinimizado(elemento){
+// REFATORAR
+function estaMinimizado1(elemento){
     if(elemento.classList.contains("minimizado")){
         const aberto = document.querySelector(".main-screen3-2").querySelector(".aberto");
+        aberto.classList.remove("aberto");
+        aberto.classList.add("minimizado");
+        elemento.classList.remove("minimizado");
+        elemento.classList.add("aberto");
+    }else{
+        console.log("Está aberto!");
+    }
+}
+
+// REFATORAR
+function estaMinimizado2(elemento){
+    if(elemento.classList.contains("minimizado")){
+        const aberto = document.querySelector(".main-screen3-3").querySelector(".aberto");
         aberto.classList.remove("aberto");
         aberto.classList.add("minimizado");
         elemento.classList.remove("minimizado");
@@ -164,5 +178,75 @@ function criarQuizzPt2(elemento) {
     }
 
     console.log("Quizz Pt2 sucesso!");
+
+    document.querySelector(".main-screen3-2").classList.add("escondido");
+    document.querySelector(".main-screen3-3").classList.remove("escondido");
+
+    criarQuizzTela3(paginaInicialCriacao);
     
+}
+
+function criarQuizzTela3 (paginaInicialCriacao){
+    const numPerguntas = paginaInicialCriacao[3];
+    const inserirPergunta = document.querySelector(".main-screen3-3").querySelector("form");
+    inserirPergunta.innerHTML = `
+            <div class="card-forms aberto" onclick="estaMinimizado2(this)">
+                <div class="titulo-card">
+                    <div class="numero-pergunta">Nível 1</div>
+                    <ion-icon name="create-outline"></ion-icon>
+                </div>
+                <input type="text" name="titulo-nivel" placeholder="Título do nível" required>
+                <input type="text" name="porcentagem" placeholder="% de acerto mínima" required>
+                <input type="url" name="nivel-img" placeholder="URL da imagem" required>
+                <input type="text" name="descricao-nivel" placeholder="Descrição do nível" required>
+                
+            </div>
+    `;
+    console.log(numPerguntas);
+
+    for (let i = 1; i < numPerguntas; i++){
+        inserirPergunta.innerHTML += `
+        <div class="card-forms minimizado" onclick="estaMinimizado2(this)">
+            <div class="titulo-card">
+                <div class="numero-pergunta">Nível ${i+1}</div>
+                <ion-icon name="create-outline"></ion-icon>
+            </div>
+            <input type="text" name="titulo-nivel" placeholder="Título do nível" required>
+            <input type="text" name="porcentagem" placeholder="% de acerto mínima" required>
+            <input type="url" name="nivel-img" placeholder="URL da imagem" required>
+            <input type="text" name="descricao-nivel" placeholder="Descrição do nível" required>      
+        </div>`;
+    }
+
+    inserirPergunta.innerHTML += `<button class="criar-perguntas-btn" onclick="criarQuizzPt3(this)"><span>Finalizar Quizz</span></button>`;
+
+}
+
+function criarQuizzPt3(elemento) {
+    const titulo = document.getElementsByName("titulo-nivel");
+    const porcentagens = document.getElementsByName("porcentagem");
+    const descricao = document.getElementsByName("descricao-nivel");
+    let contagemDeZeros = 0;
+
+    for(let i = 0; i < titulo.length; i++){
+        if(titulo[i].value == "" || titulo[i].value.length < 10 || porcentagens[i].value < 0 || porcentagens[i].value > 100 || porcentagens[i].value == ""){
+            
+            alert("Preencha todos os campos corretamente!");
+            return;
+        }
+        if(descricao[i].value == "" || descricao[i].value.length < 30){
+            alert("Preencha todos os campos corretamente!");
+            return;
+        }
+        if(porcentagens[i].value == 0){
+            contagemDeZeros++;
+        }
+    }
+
+    if(contagemDeZeros === 0 || contagemDeZeros > 1){
+        alert("Coloque apenas um nível com 0% de acerto!");
+        return;
+    }
+    
+    console.log("Quizz Pt3 sucesso!");
 }
