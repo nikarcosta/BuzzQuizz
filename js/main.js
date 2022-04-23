@@ -1,5 +1,4 @@
-//const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes"
-const API_DE_TESTE = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes" //SÓ PARA TESTE DE LAYOUT E FUNÇÕES, DEPOIS SERÁ REMOVIDA
+const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes"
 
 const shuffle = () => 0.5 - Math.random();
 
@@ -18,7 +17,7 @@ buscarQuizzesServidor()
 //BUSCA NO SERVIDOR TODOS OS QUIZZES
 function buscarQuizzesServidor(){
 
-    const promessa = axios.get(`${API_DE_TESTE}`);
+    const promessa = axios.get(`${API}`);
     console.log(promessa);
     promessa.then(carregarQuizzesServidor);
     promessa.catch(erroAoCarregarQuizzServidor);
@@ -54,7 +53,7 @@ function renderizarQuizzes(){
 //BUSCA NO SERVIDOR O QUIZZ SELECIONADO PELO USUÁRIO
 function buscaQuizz(identificador){
 
-    const promessa = axios.get(`${API_DE_TESTE}/${identificador}`);
+    const promessa = axios.get(`${API}/${identificador}`);
     console.log(promessa);
     promessa.then(carregarQuizzSelecionado);
     promessa.catch(erroAoBuscarQuizzSelecionado);
@@ -368,9 +367,9 @@ function selecionaAlternativa(alternativa){
 
         AlteraCorAlternativas(alternativa);
 
-        return;
-
-        
+        let coordenada = Number(idParente) + 1;
+        console.log(coordenada);
+        setTimeout(scrollParaProximaPergunta, 2000, coordenada);   
 
     }
 
@@ -416,3 +415,16 @@ function AlteraCorAlternativas(elemento){
     return;
 }
 
+
+function scrollParaProximaPergunta(coordenada){
+
+    try {
+        let irPara = document.getElementById(coordenada).parentElement;
+        irPara.scrollIntoView();
+
+      } catch (error) {
+        console.log("Final da página");
+
+      }
+
+}
