@@ -59,6 +59,13 @@ function renderizarQuizzes(){
 //BUSCA NO SERVIDOR O QUIZZ SELECIONADO PELO USUÁRIO
 function buscaQuizz(identificador){
 
+    // Verifica se estava na página de sucesso do quizz
+    const isSucessoQuizz = document.querySelector(".main-screen3-end").classList.contains("escondido");
+    console.log(isSucessoQuizz);
+
+    if(isSucessoQuizz == false){
+        document.querySelector(".main-screen3-end").classList.add("escondido");
+    }
     const promessa = axios.get(`${API}/${identificador}`);
     console.log(promessa);
     promessa.then(carregarQuizzSelecionado);
@@ -376,17 +383,17 @@ function criarQuizzPt3(elemento) {
     }
 
     console.log("Quizz Pt3 sucesso!");
-
    axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", objetoFinal)
         .then(function (response) {
             console.log("ID do Quizz", response.data.id);
-            
+            idDesteQuizz = response.data.id;
             quizzesUsuario.push(localStorage.getItem("idQuizz"));
             if(quizzesUsuario[0] == null){
                 quizzesUsuario.pop();
             }
             quizzesUsuario.push(response.data.id);  
-            localStorage.setItem("idQuizz", quizzesUsuario);    
+            localStorage.setItem("idQuizz", quizzesUsuario); 
+            sucessoDoQuizz(response);   
         })
         .catch(function (error) {
             console.log(error);
@@ -506,4 +513,44 @@ function scrollParaProximaPergunta(coordenada){
         console.log("Final da página");
 
       }
+}
+
+function sucessoDoQuizz(elemento){
+    let id = elemento.data.id;
+    let titulo = elemento.data.title;
+    let imagem = elemento.data.image;
+
+    document.querySelector(".main-screen3-3").classList.add("escondido");
+    document.querySelector(".main-screen3-end").classList.remove("escondido");
+
+    console.log("Quizz criado com sucesso!");
+
+    const quizz = document.querySelector(".main-screen3-end");
+
+    quizz.innerHTML += `
+        <div class="capa-Quizz capa-quizz-user" onclick="buscaQuizz(${id})">
+            <div class="image-Quizz capa-quizz-user"><img src="${imagem}"></div>
+            <div class="titulo-Quizz">${titulo}</div>
+        </div>
+        <button class="criar-perguntas-btn" onclick="buscaQuizz(${id})"><span>Acessar Quizz</span></button>
+        <button class="voltar-home" onclick="voltarHome()"><span>Voltar pra home</span></button>
+    `;  
+}
+
+// function buscaQuizzFinal(identificador){
+
+
+//     const promessa = axios.get(`${API}/${identificador}`);
+//     console.log(promessa);
+//     promessa.then(function (response) {
+//         document.querySelector(".main-screen3-end").classList.add("escondido");
+//         carregarQuizzSelecionado(response);
+//     });
+//     promessa.catch(erroAoBuscarQuizzSelecionado);
+
+// }
+
+function voltarHome(){
+
+    window.location.reload();
 }

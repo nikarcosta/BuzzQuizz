@@ -121,9 +121,7 @@ main {
     margin-left: 20px;
 }
 
-.escondido {
-    display: none;
-}
+
 
 .capa-Quizz{
     height:181px;
@@ -403,7 +401,29 @@ main {
     justify-content: space-between;
 }
 
+.main-screen3-end {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.capa-quizz-user {
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+}
+
+.title-fim {
+    margin-bottom: 46px;
+}
+
+.capa-quizz-user > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+
+}
 
 .minimizado ion-icon {
     font-size: 26px;
@@ -420,6 +440,23 @@ main {
 
 .cor-verdadeira{
     color: rgba(0, 156, 34, 1);
+}
+
+.voltar-home {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    background-color: #FAFAFA;
+    border: none;
+    text-align: center;
+    color: #818181;
+    margin-top: -66px;
+}
+
+.escondido {
+    display: none;
 }
 
 /*MOBILE RESPONSIVO*/
@@ -462,7 +499,25 @@ main {
    
     }
 
-    .main-screen3-1, .main-screen3-2, .main-screen3-3 {
+    .capa-quizz-user, .capa-Quizz.capa-quizz-user{
+        width: 90%;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .image-Quizz.capa-quizz-user {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .main-screen3 {
+        display: block;
+    }
+
+    .main-screen3-1, .main-screen3-2, .main-screen3-3, .main-screen3-end {
         width: 100%;
     }
 
