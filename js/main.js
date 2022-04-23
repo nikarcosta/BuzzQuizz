@@ -16,6 +16,10 @@ let questionsObject = [];
 let niveis = [];
 // GUARDA OS IDS DOS QUIZZES CRIADOS PELO USER
 let quizzesUsuario = [];
+let pontuacao = 0;
+
+let acertos = 0;
+
 
 buscarQuizzesServidor()
 
@@ -465,7 +469,7 @@ function uniqueID(){
 
 //SELECIONA ALTERNATIVA
 function selecionaAlternativa(alternativa){
-    
+    console.log(alternativa);
 
     if(verificaSelecionado(alternativa) === true){
 
@@ -486,6 +490,8 @@ function selecionaAlternativa(alternativa){
         }
 
         AlteraCorAlternativas(alternativa);
+
+        verificaResposta(alternativa);
 
         let coordenada = Number(idParente) + 1;
         console.log(coordenada);
@@ -535,7 +541,7 @@ function AlteraCorAlternativas(elemento){
     return;
 }
 
-
+//SCROLLA A PÁGINA PARA A PRÓXIMA PERGUNTA DO QUIZZ
 function scrollParaProximaPergunta(coordenada){
 
     try {
@@ -544,6 +550,8 @@ function scrollParaProximaPergunta(coordenada){
 
       } catch (error) {
         console.log("Final da página");
+
+        calculaPontuacao();
 
       }
 }
@@ -574,3 +582,66 @@ function voltarHome(){
 
     window.location.reload();
 }
+
+
+//VERIFICA SE O USUÁRIO SELECIONOU A RESPOSTA CORRETA
+function verificaResposta(alternativa){
+
+    let resposta = document.getElementById(alternativa).querySelector(".true");
+    
+    if(resposta === null){
+        return;
+    }
+    else{
+        acertos++;
+        return;
+    }
+    
+
+}
+
+
+//CALCULA PONTUACAO DO USUARIO
+function calculaPontuacao(){
+    let perguntasDoQuizz = document.querySelectorAll(".perguntas");
+    let numeroDePerguntas = perguntasDoQuizz.length;
+    console.log("Num perguntas: "+ numeroDePerguntas);
+
+    pontuacao =  Math.round((acertos / numeroDePerguntas) * 100);
+    console.log("Pontuacao: " + pontuacao);
+    
+    determinaNivelUsuario(pontuacao);
+    
+}
+
+
+function determinaNivelUsuario(pontos){
+
+    let minPontos = Number(quizzSelecionado.levels[0].minValue);
+    console.log(minPontos);
+    let maxPontos = Number(quizzSelecionado.levels[1].minValue);
+    console.log(maxPontos);
+
+    if(pontos >= maxPontos ){
+        resultadoQuizz(1);
+    }
+    
+    if(pontos >= minPontos && pontos < maxPontos){
+        resultadoQuizz(0);
+    }
+}
+
+//GERA A CAIXA DE RESULTADO DO QUIZZ
+function resultadoQuizz(nivel){
+
+    const geraTela = document.querySelector(".container-perguntas");
+    geraTela.innerHTML += `<div class="resultado-quizz"><div class="arcabouco"><div class="titulo-resultado" style="background:rgba(236, 54, 45, 1);"><span>${pontuacao}% de acerto: ${quizzSelecionado.levels[`${nivel}`].title}</span></div><div class="compilado-resultado"><div class="imagem-resultado"><img src="${quizzSelecionado.levels[`${nivel}`].image}"></div><div class="texto-resultado"><span>${quizzSelecionado.levels[0].text}</span></div></div></div><div class="botoes-quizz"><button class="reiniciar-btn"><span>Reiniciar Quizz</span></button><button class="voltar-home-btn"><span>Voltar pra home</span></button></div></div>
+    `
+    setTimeout( function scrollResultado(){
+        let irParaResultado = document.querySelector(".resultado-quizz");
+        irParaResultado.scrollIntoView();
+    }, 2000)
+
+}
+
+

@@ -237,7 +237,7 @@ main {
     background-color: white;
 }
 
-.perguntas{
+.perguntas, .titulo-resultado{
     width: 100%;
     height: 140px;
     display: flex;
@@ -246,7 +246,7 @@ main {
     margin-bottom: 20px;
 }
 
-.perguntas > span {
+.perguntas > span, .titulo-resultado > span {
     font-family: Roboto;
     font-size: 23px;
     font-weight: 700;
@@ -254,16 +254,16 @@ main {
     letter-spacing: 0em;
     text-align: center;
     color: rgba(255, 255, 255, 1);
-    word-break: break-all;
+    word-break: break-word;
 }
 
-.alternativas{
+.alternativas, .compilado-resultado{
     display: grid;
     grid-template-columns: auto auto;
     gap: 20px;
 }
 
-.imgAlternativa {
+.imgAlternativa, .imagem-resultado {
     display: flex;
     justify-content: center;
 }
@@ -271,6 +271,11 @@ main {
 .imgAlternativa > img{
     width: 330px;
     height: 176px;
+}
+
+.imagem-resultado > img{
+    width: 364px;
+    height: 273px;
 }
 
 .txtAlternativa{
@@ -282,7 +287,62 @@ main {
     text-align: left;
     padding-left: 10px;
     padding-top: 5px;
-    word-break: break-all;
+    word-break: break-word;
+}
+
+.texto-resultado{
+    font-family: Roboto;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+    word-break: break-word;
+    padding-right: 20px;
+}
+
+.botoes-quizz {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.reiniciar-btn{
+    background-color: rgba(236, 54, 45, 1);
+    border-radius: 10px;
+    border: none;
+    width: 260.38px;
+    height: 52px;
+    margin-bottom: 20px;
+}
+
+.reiniciar-btn > span{
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: rgba(255, 245, 244, 1);
+    
+
+}
+
+.voltar-home-btn{
+    border: none;
+    background-color:  #E5E5E5;;
+}
+
+.voltar-home-btn > span {
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: rgba(129, 129, 129, 1);
+
 }
 
 .main-screen3 {
@@ -460,6 +520,12 @@ main {
 .escondido {
     display: none;
 }
+.resultado-quizz{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 /*MOBILE RESPONSIVO*/
 
@@ -543,5 +609,10 @@ main {
 
     .imgAlternativa > img {
         width: 100%;
+    }
+
+    .imagem-resultado > img{
+        width: 100%;
+
     }
 }
