@@ -39,7 +39,6 @@ function buscarQuizzUser(){
     }else{
         console.log("Não existem quizzes salvos");
     }
-    console.log(idQuizz);
 }
 
 //COPIA TODOS OS QUIZZES PARA UM ARRAY
@@ -61,11 +60,27 @@ function erroAoCarregarQuizzServidor(erro){
 //EXIBE LISTA DE QUIZZES
 function renderizarQuizzes(){
 
-        const quizz = document.querySelector(".quizz-container");
-
-        for(let i = 0; i < listaQuizzes.length; i++){
-            quizz.innerHTML += `<div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
+    const quizz = document.querySelector(".quizz-container");
+    const quizzesUsuario = document.querySelector(".container-usuario");
+    const idQuizz = localStorage.getItem("idQuizz");
+    buscarQuizzUser();
+    let contadorSecundario = 0;
+    for(let i = 0; i < listaQuizzes.length; i++){
+        if((idQuizz.includes(listaQuizzes[i].id.toString())) === true){
+            quizzesUsuario.innerHTML += `
+                <div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)">
+                    <div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div>
+                    <div class="titulo-Quizz">${listaQuizzes[i].title}</div>
+                </div>`;
+            contadorSecundario++;
+        }else{
+            quizz.innerHTML += `
+                <div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)">
+                    <div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div>
+                    <div class="titulo-Quizz">${listaQuizzes[i].title}</div>
+                </div>`;
         }
+    }
 }
 
 //BUSCA NO SERVIDOR O QUIZZ SELECIONADO PELO USUÁRIO

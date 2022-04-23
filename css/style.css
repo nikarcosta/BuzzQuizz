@@ -95,6 +95,8 @@ main {
 
 .container-usuario{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .quizzes-servidor span, .quizzes-usuario span{
