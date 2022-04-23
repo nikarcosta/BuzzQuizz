@@ -374,15 +374,15 @@ main {
     color: #FFF5F4;
 }
 
-.main-screen3-2 .card-forms > label {
+.main-screen3-2 .card-forms > .container-alternativas > label {
     margin-bottom: 24px;
 }
 
-.main-screen3-2 .card-forms > input[type="text"] {
+.main-screen3-2 .card-forms > .container-alternativas > input[type="text"] {
     margin-bottom: 14px;
 }
 
-.main-screen3-2 .card-forms > input[type="url"] {
+.main-screen3-2 .card-forms > .container-alternativas > input[type="url"] {
     margin-bottom: 30px;
 }
 
@@ -390,7 +390,11 @@ main {
     display: none;
 }
 
-.card-forms.minimizado > input[type="text"],  .card-forms.minimizado > input[type="url"], .card-forms.minimizado > label {
+.card-forms.minimizado > .container-alternativas > input[type="text"],  .card-forms.minimizado > .container-alternativas > input[type="url"], .card-forms.minimizado > .container-alternativas > label {
+    display: none;
+}
+
+.card-forms.minimizado > input[type="text"], .card-forms.minimizado > input[type="url"]{
     display: none;
 }
 

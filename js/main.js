@@ -10,6 +10,12 @@ let quizzSelecionado = [];
 
 let alternativas = [];
 
+// GUARDA AS RESPOSTAS CRIADAS PELO USER
+let questionsObject = [];
+// GUARDA OS NIVEIS CRIADOS PELO USER
+let niveis = [];
+// GUARDA OS IDS DOS QUIZZES CRIADOS PELO USER
+let quizzesUsuario = [];
 
 buscarQuizzesServidor()
 
@@ -145,20 +151,21 @@ function criarQuizzTela2(paginaAnterior){
                 </div>
                 <input type="text" name="pergunta" placeholder="Texto da pergunta" required>
                 <input type="text" name="color" placeholder="Cor de fundo da pergunta" required>
+                <div class="container-alternativas">
+                    <label for="resposta-correta">Resposta correta</label>
+                    <input type="text" name="resposta-correta" placeholder="Resposta correta" required>
+                    <input type="url" name="quizz-url" placeholder="URL da imagem" required>
 
-                <label for="resposta-correta">Resposta correta</label>
-                <input type="text" name="resposta-correta" placeholder="Resposta correta" required>
-                <input type="url" name="quizz-url" placeholder="URL da imagem" required>
+                    <label for="">Respostas incorretas</label>
+                    <input type="text" name="resposta-errada-1" placeholder="Resposta incorreta 1" required>
+                    <input type="url" name="quizz-url-1" placeholder="URL da imagem" required>
+                    
+                    <input type="text" name="resposta-errada-2" placeholder="Resposta incorreta 2">
+                    <input type="url" name="quizz-url-2" placeholder="URL da imagem">
 
-                <label for="">Respostas incorretas</label>
-                <input type="text" name="resposta-errada-1" placeholder="Resposta incorreta 1" required>
-                <input type="url" name="quizz-url" placeholder="URL da imagem" required>
-                
-                <input type="text" name="resposta-errada-2" placeholder="Resposta incorreta 2">
-                <input type="url" name="quizz-url" placeholder="URL da imagem">
-
-                <input type="text" name="resposta-errada-3" placeholder="Resposta incorreta 3">
-                <input type="url" name="quizz-url" placeholder="URL da imagem">
+                    <input type="text" name="resposta-errada-3" placeholder="Resposta incorreta 3">
+                    <input type="url" name="quizz-url-3" placeholder="URL da imagem">
+                </div>
             </div>
     `;
     console.log(numPerguntas);
@@ -172,20 +179,21 @@ function criarQuizzTela2(paginaAnterior){
                     </div>
                     <input type="text" name="pergunta" placeholder="Texto da pergunta" required>
                     <input type="text" name="color" placeholder="Cor de fundo da pergunta" required>
-    
-                    <label for="resposta-correta">Resposta correta</label>
-                    <input type="text" name="resposta-correta" placeholder="Resposta correta" required>
-                    <input type="url" name="quizz-url" placeholder="URL da imagem" required>
-    
-                    <label for="">Respostas incorretas</label>
-                    <input type="text" name="resposta-errada-1" placeholder="Resposta incorreta 1" required>
-                    <input type="url" name="quizz-url" placeholder="URL da imagem" required>
-                    
-                    <input type="text" name="resposta-errada-2" placeholder="Resposta incorreta 2">
-                    <input type="url" name="quizz-url" placeholder="URL da imagem">
-    
-                    <input type="text" name="resposta-errada-3" placeholder="Resposta incorreta 3">
-                    <input type="url" name="quizz-url" placeholder="URL da imagem">        
+                    <div class="container-alternativas">
+                        <label for="resposta-correta">Resposta correta</label>
+                        <input type="text" name="resposta-correta" placeholder="Resposta correta" required>
+                        <input type="url" name="quizz-url" placeholder="URL da imagem" required>
+        
+                        <label for="">Respostas incorretas</label>
+                        <input type="text" name="resposta-errada-1" placeholder="Resposta incorreta 1" required>
+                        <input type="url" name="quizz-url-1" placeholder="URL da imagem" required>
+                        
+                        <input type="text" name="resposta-errada-2" placeholder="Resposta incorreta 2">
+                        <input type="url" name="quizz-url-2" placeholder="URL da imagem">
+        
+                        <input type="text" name="resposta-errada-3" placeholder="Resposta incorreta 3">
+                        <input type="url" name="quizz-url-3" placeholder="URL da imagem">
+                    </div>        
                 </div>
         `;
     }
@@ -238,7 +246,19 @@ function criarQuizzPt2(elemento) {
             return;
         }
     }
+    
+    let listaAlternativas = document.querySelectorAll(".container-alternativas");
+    listaAlternativas.item
 
+    for(let i = 0; i < perguntas.length; i++){
+        questionsObject[i] = {
+            title: perguntas[i].value,
+            color: color[i].value,
+            answers: montaRespostas(listaAlternativas.item(i))
+        };         
+    }
+    
+    console.log("Questões: ", questionsObject);
     console.log("Quizz Pt2 sucesso!");
 
     document.querySelector(".main-screen3-2").classList.add("escondido");
@@ -246,6 +266,34 @@ function criarQuizzPt2(elemento) {
 
     criarQuizzTela3(paginaInicialCriacao);
     
+}
+
+function montaRespostas(listaAlternativas){
+    console.log(listaAlternativas.querySelectorAll("input"));
+
+    let temp = listaAlternativas.querySelectorAll("input");
+    let alternativas = [];
+    alternativas[0] = {
+        "text": temp[0].value,
+        "image": temp[1].value,
+        "isCorrectAnswer": true
+    };
+    let secondcounter = 2;
+    for (let i = 1; i < 3; i++){
+        console.log("Valor temp",temp[i].value);
+        if(temp[secondcounter].value !== ""){
+            alternativas[i] = {
+                text: temp[secondcounter].value,
+                image: temp[(secondcounter+1)].value,
+                isCorrectAnswer: false
+            };
+            secondcounter += 2;       
+        }
+    }
+
+    console.log(alternativas);
+
+    return alternativas;
 }
 
 function criarQuizzTela3 (paginaInicialCriacao){
@@ -287,6 +335,7 @@ function criarQuizzTela3 (paginaInicialCriacao){
 function criarQuizzPt3(elemento) {
     const titulo = document.getElementsByName("titulo-nivel");
     const porcentagens = document.getElementsByName("porcentagem");
+    const img = document.getElementsByName("nivel-img");
     const descricao = document.getElementsByName("descricao-nivel");
     let contagemDeZeros = 0;
 
@@ -309,8 +358,39 @@ function criarQuizzPt3(elemento) {
         alert("Coloque apenas um nível com 0% de acerto!");
         return;
     }
-    
+
+    for(let i = 0; i < titulo.length; i++){
+        niveis[i] = {
+            title: titulo[i].value,
+            image: img[i].value,
+            text: descricao[i].value,
+            minValue: Number(porcentagens[i].value)
+        };         
+    }
+
+    let objetoFinal = {
+        title: paginaInicialCriacao[0],
+        image: paginaInicialCriacao[1],
+        questions: questionsObject,
+        levels: niveis
+    }
+
     console.log("Quizz Pt3 sucesso!");
+
+   axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", objetoFinal)
+        .then(function (response) {
+            console.log("ID do Quizz", response.data.id);
+            
+            quizzesUsuario.push(localStorage.getItem("idQuizz"));
+            if(quizzesUsuario[0] == null){
+                quizzesUsuario.pop();
+            }
+            quizzesUsuario.push(response.data.id);  
+            localStorage.setItem("idQuizz", quizzesUsuario);    
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 
@@ -426,5 +506,4 @@ function scrollParaProximaPergunta(coordenada){
         console.log("Final da página");
 
       }
-
 }
