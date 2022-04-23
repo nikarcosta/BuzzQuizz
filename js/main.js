@@ -5,11 +5,8 @@ const shuffle = () => 0.5 - Math.random();
 let listaQuizzes = [];
 let paginaInicialCriacao = [];
 let idQuizzExibicao;
-
 let quizzSelecionado = [];
-
 let alternativas = [];
-
 // GUARDA AS RESPOSTAS CRIADAS PELO USER
 let questionsObject = [];
 // GUARDA OS NIVEIS CRIADOS PELO USER
@@ -17,7 +14,6 @@ let niveis = [];
 // GUARDA OS IDS DOS QUIZZES CRIADOS PELO USER
 let quizzesUsuario = [];
 let pontuacao = 0;
-
 let acertos = 0;
 
 
@@ -70,7 +66,7 @@ function renderizarQuizzes(){
     buscarQuizzUser();
     let contadorSecundario = 0;
     for(let i = 0; i < listaQuizzes.length; i++){
-        if((idQuizz.includes(listaQuizzes[i].id.toString())) === true){
+        if(idQuizz !== null &&  (idQuizz.includes(listaQuizzes[i].id.toString())) === true){
             quizzesUsuario.innerHTML += `
                 <div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)">
                     <div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div>
@@ -635,12 +631,38 @@ function determinaNivelUsuario(pontos){
 function resultadoQuizz(nivel){
 
     const geraTela = document.querySelector(".container-perguntas");
-    geraTela.innerHTML += `<div class="resultado-quizz"><div class="arcabouco"><div class="titulo-resultado" style="background:rgba(236, 54, 45, 1);"><span>${pontuacao}% de acerto: ${quizzSelecionado.levels[`${nivel}`].title}</span></div><div class="compilado-resultado"><div class="imagem-resultado"><img src="${quizzSelecionado.levels[`${nivel}`].image}"></div><div class="texto-resultado"><span>${quizzSelecionado.levels[0].text}</span></div></div></div><div class="botoes-quizz"><button class="reiniciar-btn"><span>Reiniciar Quizz</span></button><button class="voltar-home-btn"><span>Voltar pra home</span></button></div></div>
+    geraTela.innerHTML += `<div class="resultado-quizz"><div class="arcabouco"><div class="titulo-resultado" style="background:rgba(236, 54, 45, 1);"><span>${pontuacao}% de acerto: ${quizzSelecionado.levels[`${nivel}`].title}</span></div><div class="compilado-resultado"><div class="imagem-resultado"><img src="${quizzSelecionado.levels[`${nivel}`].image}"></div><div class="texto-resultado"><span>${quizzSelecionado.levels[0].text}</span></div></div></div><div class="botoes-quizz"><button class="reiniciar-btn" onclick="reiniciarQuizz()"><span>Reiniciar Quizz</span></button><button class="voltar-home-btn" onclick="voltarHome()"><span>Voltar pra home</span></button></div></div>
     `
     setTimeout( function scrollResultado(){
         let irParaResultado = document.querySelector(".resultado-quizz");
         irParaResultado.scrollIntoView();
     }, 2000)
+
+}
+
+//REINICIA QUIZZ
+function reiniciarQuizz(){
+
+    let removeDivResultadosQuizz = document.querySelector(".resultado-quizz");
+    removeDivResultadosQuizz.remove();
+
+    pontuacao = 0;
+
+    acertos = 0;
+
+    let removeSelecionado = document.querySelectorAll(".option")    
+    removeSelecionado.forEach(elemento => elemento.classList.remove("selecionado"));
+    
+    let removeEsbranquicado = document.querySelectorAll(".option")
+    removeEsbranquicado.forEach(elemento => elemento.classList.remove("esbranquicado"));
+
+    let removeCoresTrue = document.querySelectorAll(".txtAlternativa")
+    removeCoresTrue.forEach(elemento => elemento.classList.remove("cor-verdadeira"));
+
+    let removeCoresFalse = document.querySelectorAll(".txtAlternativa")
+    removeCoresFalse.forEach(elemento => elemento.classList.remove("cor-falsa"));
+
+    document.querySelector(".imagem-banner").scrollIntoView();
 
 }
 
