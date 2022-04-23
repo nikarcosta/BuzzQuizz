@@ -22,20 +22,38 @@ buscarQuizzesServidor()
 
 //BUSCA NO SERVIDOR TODOS OS QUIZZES
 function buscarQuizzesServidor(){
+    // CHAMA O CARREGAMENTO DOS QUIZZES DO USER
+    buscarQuizzUser();
 
+    // CARREGA OS QUIZZES DO SERVER
     const promessa = axios.get(`${API}`);
     console.log(promessa);
-    promessa.then(carregarQuizzesServidor);
+    promessa.then(function (response) {
+        carregarQuizzes(response, false);
+    });
     promessa.catch(erroAoCarregarQuizzServidor);
 
 }
 
+function buscarQuizzUser(){
+    const idQuizz = localStorage.getItem("idQuizz");
+    if(idQuizz !== null){
+        console.log("Existem quizzes salvos");
+        document.querySelector(".quizzes-usuario-vazio").classList.add("escondido");
+        document.querySelector(".quizzes-usuario").classList.remove("escondido");
+    }else{
+        console.log("Não existem quizzes salvos");
+    }
+    console.log(idQuizz);
+}
+
 //COPIA TODOS OS QUIZZES PARA UM ARRAY
-function carregarQuizzesServidor(response){
+// RECEBE TAMBEM UM BOOL QUE INDICA SE É PARA CARREGAR OS QUIZZES DO USUÁRIO OU DO SERVIDOR
+function carregarQuizzes(response, bool){
 
     console.log(response.data);
     listaQuizzes = response.data;
-    renderizarQuizzes()
+    renderizarQuizzes(bool)
 }
 
 
@@ -47,12 +65,18 @@ function erroAoCarregarQuizzServidor(erro){
 }
 
 //EXIBE LISTA DE QUIZZES
-function renderizarQuizzes(){
+// RECEBE TAMBEM UM BOOL QUE INDICA SE É PARA CARREGAR OS QUIZZES DO USUÁRIO OU DO SERVIDOR
+function renderizarQuizzes(bool){
 
-    const quizz = document.querySelector(".quizz-container");
+    if(bool == true){
+        console.log("Lista do user");
+    }else{
+        console.log("Lista do servidor");
+        const quizz = document.querySelector(".quizz-container");
 
-    for(let i = 0; i < listaQuizzes.length; i++){
-        quizz.innerHTML += `<div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
+        for(let i = 0; i < listaQuizzes.length; i++){
+            quizz.innerHTML += `<div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
+        }
     }
 }
 
@@ -122,6 +146,12 @@ function exibeQuizzSelecionado(){
 
     document.querySelector(".imagem-banner").scrollIntoView();
 
+}
+
+function criarQuizz(){
+    
+        document.querySelector(".main-screen1").classList.add("escondido");
+        document.querySelector(".main-screen3-1").classList.remove("escondido");
 }
 
 function criarQuizzPt1(){
@@ -536,19 +566,6 @@ function sucessoDoQuizz(elemento){
         <button class="voltar-home" onclick="voltarHome()"><span>Voltar pra home</span></button>
     `;  
 }
-
-// function buscaQuizzFinal(identificador){
-
-
-//     const promessa = axios.get(`${API}/${identificador}`);
-//     console.log(promessa);
-//     promessa.then(function (response) {
-//         document.querySelector(".main-screen3-end").classList.add("escondido");
-//         carregarQuizzSelecionado(response);
-//     });
-//     promessa.catch(erroAoBuscarQuizzSelecionado);
-
-// }
 
 function voltarHome(){
 
