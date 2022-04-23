@@ -9,6 +9,8 @@ let idQuizzExibicao;
 
 let quizzSelecionado = [];
 
+let alternativas = [];
+
 
 buscarQuizzesServidor()
 
@@ -93,16 +95,21 @@ function exibeQuizzSelecionado(){
 
 
     for(let i = 0; i < quizzSelecionadoEmbaralhado.length; i++){
-        inserePerguntas.innerHTML += `<div class="arcabouco"><div class="perguntas"><span>${quizzSelecionadoEmbaralhado[i].title}</span></div><div id="${i}" class="alternativas"></div></div>
+        inserePerguntas.innerHTML += `<div class="arcabouco"><div class="perguntas" style="background: ${quizzSelecionadoEmbaralhado[i].color};"><span>${quizzSelecionadoEmbaralhado[i].title}</span></div><div id="${i}" class="alternativas"></div></div>
         `
 
         for(let j = 0; j < quizzSelecionadoEmbaralhado[i].answers.length; j++) {
             const insereAlternativas = document.getElementById(`${i}`);
 
-            insereAlternativas.innerHTML += `<div><div class="imgAlternativa"><img src="${quizzSelecionadoEmbaralhado[i].answers[j].image}"></div><div class="txtAlternativa">${quizzSelecionadoEmbaralhado[i].answers[j].text}</div></div>` 
+                insereAlternativas.innerHTML += `<div class="option" onclick="selecionaAlternativa(this.id)"><div class="imgAlternativa"><img src="${quizzSelecionadoEmbaralhado[i].answers[j].image}"></div><div class="txtAlternativa ${quizzSelecionadoEmbaralhado[i].answers[j].isCorrectAnswer}">${quizzSelecionadoEmbaralhado[i].answers[j].text}</div></div>` 
 
         }
+
+        insereIndice(i);
     }
+
+    document.querySelector(".imagem-banner").scrollIntoView();
+
 }
 
 function criarQuizzPt1(){
@@ -316,5 +323,96 @@ function embaralharAlternativas(objeto){
     console.log(alternativasAleatorias);
 
     return alternativasAleatorias;
+}
+
+//ADICIONA ID EM CADA ALTERNATIVA DA PERGUNTA DO QUIZZ
+function insereIndice(idAlternativas){
+
+    alternativas = document.getElementById(`${idAlternativas}`).querySelectorAll(".option");
+
+    console.log(alternativas);
+    for(let i = 0; i < alternativas.length; i++){
+    (alternativas.item(i)).setAttribute("id", uniqueID());
+
+    }
+    return;
+}
+
+//CRIA ID ÚNICO
+function uniqueID(){
+    return Date.now().toString(36) + Math.random().toString(36);
+}
+
+
+//SELECIONA ALTERNATIVA
+function selecionaAlternativa(alternativa){
+    
+
+    if(verificaSelecionado(alternativa) === true){
+
+        
+        document.getElementById(`${alternativa}`).classList.add("selecionado");
+
+        let testando = document.getElementById(`${alternativa}`).parentNode;
+        let idParente = testando.id;        
+
+        let busca = document.getElementById(`${idParente}`).querySelectorAll(".option");
+
+        for(let i = 0; i < busca.length; i++){
+            let compara = busca.item(i).id;
+    
+            if(compara !== alternativa ){
+                document.getElementById(`${compara}`).classList.add("esbranquicado");
+            }
+        }
+
+        AlteraCorAlternativas(alternativa);
+
+        return;
+
+        
+
+    }
+
+}
+
+
+//VERIFICA SE ALGUMA ALTERNATIVA DA PERGUNTA EM QUESTÃO JÁ FOI SELECIONADA
+function verificaSelecionado(elementoParaVerificar){
+
+
+    let testando = document.getElementById(`${elementoParaVerificar}`).parentNode;
+    let idParente = testando.id;
+    
+
+    let buscaSelecionado = document.getElementById(`${idParente}`).querySelector(".selecionado");
+
+    if(buscaSelecionado !== null){
+        return false
+    }
+
+    return true;
+
+}
+
+
+//ALTERA A COR DO TEXTO DAS ALTERNATIVAS APÓS UMA DELAS SER SELECIONADA
+function AlteraCorAlternativas(elemento){
+
+
+    document.getElementById(`${elemento}`).classList.add("selecionado");
+
+    let testando = document.getElementById(`${elemento}`).parentNode;
+    let idParente = testando.id;
+    let divs = document.getElementById(`${idParente}`).querySelectorAll(".false")
+
+    for (let i = 0; i < divs.length; i++) {
+        divs[i].classList.add("cor-falsa");
+    }
+
+    document.getElementById(`${idParente}`).querySelector(".true").classList.add("cor-verdadeira");
+
+
+    return;
 }
 

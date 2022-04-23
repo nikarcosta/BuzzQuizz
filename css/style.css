@@ -238,7 +238,6 @@ main {
 }
 
 .perguntas{
-    background: rgba(67, 76, 160, 1);
     width: 100%;
     height: 140px;
     display: flex;
@@ -262,6 +261,11 @@ main {
     display: grid;
     grid-template-columns: auto auto;
     gap: 20px;
+}
+
+.imgAlternativa {
+    display: flex;
+    justify-content: center;
 }
 
 .imgAlternativa > img{
@@ -400,6 +404,20 @@ main {
 .minimizado ion-icon {
     font-size: 26px;
 }
+
+.esbranquicado {
+    background-color: white;
+    opacity: 0.5;
+}
+
+.cor-falsa{
+    color: red;
+}
+
+.cor-verdadeira{
+    color: rgba(0, 156, 34, 1);
+}
+
 /*MOBILE RESPONSIVO*/
 
 @media(max-width: 600px){
