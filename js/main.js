@@ -22,15 +22,10 @@ buscarQuizzesServidor()
 
 //BUSCA NO SERVIDOR TODOS OS QUIZZES
 function buscarQuizzesServidor(){
-    // CHAMA O CARREGAMENTO DOS QUIZZES DO USER
-    buscarQuizzUser();
-
     // CARREGA OS QUIZZES DO SERVER
     const promessa = axios.get(`${API}`);
     console.log(promessa);
-    promessa.then(function (response) {
-        carregarQuizzes(response, false);
-    });
+    promessa.then(carregarQuizzesServidor);
     promessa.catch(erroAoCarregarQuizzServidor);
 
 }
@@ -48,12 +43,11 @@ function buscarQuizzUser(){
 }
 
 //COPIA TODOS OS QUIZZES PARA UM ARRAY
-// RECEBE TAMBEM UM BOOL QUE INDICA SE É PARA CARREGAR OS QUIZZES DO USUÁRIO OU DO SERVIDOR
-function carregarQuizzes(response, bool){
+function carregarQuizzesServidor(response){
 
     console.log(response.data);
     listaQuizzes = response.data;
-    renderizarQuizzes(bool)
+    renderizarQuizzes()
 }
 
 
@@ -65,19 +59,13 @@ function erroAoCarregarQuizzServidor(erro){
 }
 
 //EXIBE LISTA DE QUIZZES
-// RECEBE TAMBEM UM BOOL QUE INDICA SE É PARA CARREGAR OS QUIZZES DO USUÁRIO OU DO SERVIDOR
-function renderizarQuizzes(bool){
+function renderizarQuizzes(){
 
-    if(bool == true){
-        console.log("Lista do user");
-    }else{
-        console.log("Lista do servidor");
         const quizz = document.querySelector(".quizz-container");
 
         for(let i = 0; i < listaQuizzes.length; i++){
             quizz.innerHTML += `<div id="${listaQuizzes[i].id}" class="capa-Quizz" onclick="buscaQuizz(this.id)"><div class="image-Quizz"><img src="${listaQuizzes[i].image}"></div><div class="titulo-Quizz">${listaQuizzes[i].title}</div></div>`
         }
-    }
 }
 
 //BUSCA NO SERVIDOR O QUIZZ SELECIONADO PELO USUÁRIO
