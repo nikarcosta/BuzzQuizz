@@ -631,7 +631,7 @@ function determinaNivelUsuario(pontos){
 function resultadoQuizz(nivel){
 
     const geraTela = document.querySelector(".container-perguntas");
-    geraTela.innerHTML += `<div class="resultado-quizz"><div class="arcabouco"><div class="titulo-resultado" style="background:rgba(236, 54, 45, 1);"><span>${pontuacao}% de acerto: ${quizzSelecionado.levels[`${nivel}`].title}</span></div><div class="compilado-resultado"><div class="imagem-resultado"><img src="${quizzSelecionado.levels[`${nivel}`].image}"></div><div class="texto-resultado"><span>${quizzSelecionado.levels[0].text}</span></div></div></div><div class="botoes-quizz"><button class="reiniciar-btn" onclick="reiniciarQuizz()"><span>Reiniciar Quizz</span></button><button class="voltar-home-btn" onclick="voltarHome()"><span>Voltar pra home</span></button></div></div>
+    geraTela.innerHTML += `<div class="resultado-quizz"><div class="arcabouco"><div class="titulo-resultado" style="background:rgba(236, 54, 45, 1);"><span>${pontuacao}% de acerto: ${quizzSelecionado.levels[`${nivel}`].title}</span></div><div class="compilado-resultado"><div class="imagem-resultado"><img src="${quizzSelecionado.levels[`${nivel}`].image}"></div><div class="texto-resultado"><span>${quizzSelecionado.levels[`${nivel}`].text}</span></div></div></div><div class="botoes-quizz"><button class="reiniciar-btn" onclick="reiniciarQuizz()"><span>Reiniciar Quizz</span></button><button class="voltar-home-btn" onclick="voltarHome()"><span>Voltar pra home</span></button></div></div>
     `
     setTimeout( function scrollResultado(){
         let irParaResultado = document.querySelector(".resultado-quizz");
