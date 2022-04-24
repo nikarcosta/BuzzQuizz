@@ -84,19 +84,19 @@ main {
 .quizzes-servidor, .quizzes-usuario {
     margin-top: 70px;
     margin-left: 110px;
-    margin-right: 100px;
+    /*margin-right: 100px;*/
 }
 
 .quizz-container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /*justify-content: center;*/
 }
 
 .container-usuario{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /*justify-content: center;*/
 }
 
 .quizzes-servidor span, .quizzes-usuario span{
@@ -131,7 +131,7 @@ main {
     position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-right: 14px;
+    margin-right: 42px;
     display: flex;
     justify-content: center;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
@@ -165,10 +165,6 @@ main {
 
 }
 
-.quizzes-usuario{
-    margin-top: 140px;
-    margin-left: 140px;
-}
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #BABABA;
@@ -235,6 +231,7 @@ main {
     margin-bottom: 50px;
     padding: 20px 20px;
     background-color: white;
+    width: 780px;
 }
 
 .perguntas, .titulo-resultado{
@@ -260,7 +257,8 @@ main {
 .alternativas, .compilado-resultado{
     display: grid;
     grid-template-columns: auto auto;
-    gap: 20px;
+    /*gap: 20px;*/
+    gap:70px;
 }
 
 .imgAlternativa, .imagem-resultado {
@@ -274,7 +272,7 @@ main {
 }
 
 .imagem-resultado > img{
-    width: 364px;
+    width: 330px;
     height: 273px;
 }
 
@@ -298,7 +296,8 @@ main {
     letter-spacing: 0em;
     text-align: left;
     word-break: break-word;
-    padding-right: 20px;
+    /*padding-right: 20px;*/
+    width: 330px;
 }
 
 .botoes-quizz {
@@ -529,7 +528,7 @@ main {
 
 /*MOBILE RESPONSIVO*/
 
-@media(max-width: 600px){
+@media(max-width: 1100px){
 
     main {
         margin-top: 100px;
@@ -564,6 +563,7 @@ main {
     .capa-Quizz{
     
         width:100%;
+        margin-right: 5px;
    
     }
 
@@ -614,5 +614,16 @@ main {
     .imagem-resultado > img{
         width: 100%;
 
+    }
+
+    .arcabouco{
+        width: 100%;
+    }
+
+    .alternativas, .compilado-resultado{
+        gap:20px;
+    }
+    .compilado-resultado{
+        grid-template-columns:auto;
     }
 }

@@ -92,6 +92,7 @@ function buscaQuizz(identificador){
 
     if(isSucessoQuizz == false){
         document.querySelector(".main-screen3-end").classList.add("escondido");
+        document.querySelector(".main-screen3").classList.add("escondido")
     }
     const promessa = axios.get(`${API}/${identificador}`);
     console.log(promessa);
@@ -154,6 +155,7 @@ function exibeQuizzSelecionado(){
 function criarQuizz(){
     
         document.querySelector(".main-screen1").classList.add("escondido");
+        document.querySelector(".main-screen3").classList.remove("escondido");
         document.querySelector(".main-screen3-1").classList.remove("escondido");
 }
 
